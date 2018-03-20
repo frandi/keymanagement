@@ -21,6 +21,9 @@ namespace keymanagement
                     case 2:
                         GetKey();
                         break;
+                    case 3:
+                        DeleteKey();
+                        break;
                     default:
                         Console.WriteLine("Invalid");
                         break;
@@ -32,7 +35,7 @@ namespace keymanagement
 
         private static int GetSelectedMenu(int counter)
         {
-            int[] validMenu = {0, 1, 2};
+            int[] validMenu = {0, 1, 2, 3};
 
             if (counter > 0)
                 Console.WriteLine();
@@ -40,6 +43,7 @@ namespace keymanagement
             Console.WriteLine("Available action:");
             Console.WriteLine("1. Add key");
             Console.WriteLine("2. Get key");
+            Console.WriteLine("3. Delete key");
             Console.WriteLine("0. Exit");
 
             int selected;
@@ -69,7 +73,7 @@ namespace keymanagement
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"Oh snap, error: {ex.GetInnerExceptionMessage()}");
+                Console.Error.WriteLine($"Oh snap, {ex.GetInnerExceptionMessage()}");
             }
         }
 
@@ -87,7 +91,25 @@ namespace keymanagement
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"Oh snap, error: {ex.GetInnerExceptionMessage()}");
+                Console.Error.WriteLine($"Oh snap, {ex.GetInnerExceptionMessage()}");
+            }
+        }
+
+        private static void DeleteKey()
+        {
+            Console.WriteLine();
+            Console.WriteLine("-- Delete a key value from vault --");
+            Console.Write("Key Name: ");
+            var keyName = Console.ReadLine();
+
+            try
+            {
+                var recoveryId = KeyManager.Delete(keyName);
+                Console.WriteLine($"Recovery Id: {recoveryId}");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Oh snap, {ex.GetInnerExceptionMessage()}");
             }
         }
     }
